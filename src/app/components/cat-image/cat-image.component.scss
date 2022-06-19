@@ -19,8 +19,8 @@ img:hover {
   top: calc(50% - 50px);
   width: 100px;
   height: 100px;
-  mask-image: url("/assets/images/icon_heart.svg");
-  -webkit-mask-image: url("/assets/images/icon_heart.svg");
+  mask-image: url("assets/images/icon_heart.svg");
+  -webkit-mask-image: url("assets/images/icon_heart.svg");
   -webkit-mask-size: cover;
   background: gray;
   cursor: pointer;
