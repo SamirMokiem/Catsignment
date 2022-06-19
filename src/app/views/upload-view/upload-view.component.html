@@ -1,0 +1,8 @@
+<main class="container">
+  <app-nav-bar></app-nav-bar>
+  <label for="file">Upload
+    <input (change)="onUpload($event)" type="file" id="file" name="file">
+  </label>
+  {{loading ? "Uploading..." : this.message}}
+</main>
+

@@ -1,0 +1,19 @@
+<main class="container">
+  <app-nav-bar></app-nav-bar>
+  <div [hidden]="!loading">
+    <p aria-busy="true">Loading...</p>
+  </div>
+  <div [hidden]="favorites.length || loading">
+    <p>No favorites found</p>
+  </div>
+  <app-infinite-scroll
+    class="gallery"
+    [reachedEnd]="this.reachedEnd"
+    (onEndReached)="this.loadMore()"
+  >
+    <div class="item" *ngFor="let favorite of favorites">
+      <app-cat-image [isFavorite]="true" [cat]="favorite.cat!"></app-cat-image>
+    </div>
+  </app-infinite-scroll>
+</main>
+

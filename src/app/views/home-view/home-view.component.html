@@ -1,0 +1,13 @@
+<main class="container">
+  <app-nav-bar></app-nav-bar>
+  <app-infinite-scroll
+    class="gallery"
+    [reachedEnd]="this.reachedEnd"
+    (onEndReached)="this.loadMore()"
+  >
+    <div class="item" *ngFor="let cat of cats">
+      <app-cat-image [cat]="cat"></app-cat-image>
+    </div>
+  </app-infinite-scroll>
+</main>
+

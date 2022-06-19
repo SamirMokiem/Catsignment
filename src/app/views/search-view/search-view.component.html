@@ -1,0 +1,83 @@
+<main class="container">
+  <app-nav-bar></app-nav-bar>
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <div class="grid">
+      <label for="imagesize">
+        Image size
+        <select formControlName="size" required name="imagesize" id="imagesize">
+          <option value="">Select image size</option>
+          <option value="full">Full size</option>
+          <option value="med">Medium size</option>
+          <option value="small">Small size</option>
+          <option value="thumb">Thumbnail</option>
+        </select>
+      </label>
+
+      <label for="breed">
+        Breed
+        <select name="breed" id="breed" formControlName="breed">
+          <option value="">Select Breed</option>
+          <option *ngFor="let breed of breeds" value="{{breed.id}}">{{breed.name}}</option>
+        </select>
+      </label>
+    </div>
+
+    <div *ngIf="searchForm.get('size')!.invalid && searchForm.get('size')!.errors && (searchForm.get('size')!.dirty || searchForm.get('size')!.touched)">
+      <p>The size field is required.</p>
+    </div>
+    <div *ngIf="searchForm.get('breed')!.invalid && searchForm.get('breed')!.errors && (searchForm.get('breed')!.dirty || searchForm.get('breed')!.touched)">
+      <p>The breed field is required.</p>
+    </div>
+
+    <label for="breed">
+      Image type
+      <select name="image_type" formControlName="image_type">
+        <option value="">Select Image type</option>
+        <option value="gif">Gif</option>
+        <option value="jpg">Jpg</option>
+        <option value="png">Png</option>
+      </select>
+    </label>
+
+    <div *ngIf="searchForm.get('image_type')!.invalid && searchForm.get('image_type')!.errors && (searchForm.get('image_type')!.dirty || searchForm.get('image_type')!.touched)">
+      <p>The image type field is required.</p>
+    </div>
+
+    <details>
+      <summary><small>Advanced</small></summary>
+      <div class="grid">
+        <label for="perpage">
+          Results per page
+          <input min="0" max="100" type="number" formControlName="per_page" id="perpage" name="per_page" placeholder="Results per page">
+        </label>
+
+        <label for="page">
+          Page
+          <input type="number" value="1" id="page" formControlName="page" name="page" placeholder="Page">
+        </label>
+      </div>
+    </details>
+
+    <div *ngIf="searchForm.get('per_page')!.invalid && searchForm.get('per_page')!.errors && (searchForm.get('per_page')!.dirty || searchForm.get('per_page')!.touched)">
+      <p>The per page field is required.</p>
+    </div>
+
+    <div *ngIf="searchForm.get('page')!.invalid && searchForm.get('page')!.errors && (searchForm.get('page')!.dirty || searchForm.get('page')!.touched)">
+      <p>The page field is required.</p>
+    </div>
+
+    <button type="submit" [disabled]="!searchForm.valid">Submit</button>
+  </form>
+  <div [hidden]="!loading">
+    <p aria-busy="true">Loading...</p>
+  </div>
+  <app-infinite-scroll
+    class="gallery"
+    [reachedEnd]="this.reachedEnd"
+    (onEndReached)="this.loadCats(currentPage + 1)"
+  >
+    <div class="item" *ngFor="let cat of cats">
+      <app-cat-image [cat]="cat"></app-cat-image>
+    </div>
+  </app-infinite-scroll>
+</main>
